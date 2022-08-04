@@ -30,8 +30,10 @@ public class HelloWorld {
                     .channel(NioServerSocketChannel.class)
                     //设置线程队列得到连接个数
                     .option(ChannelOption.SO_BACKLOG, 128)
-                    //设置保持活动连接状态
+                    //设置打开TCP keepalive超时验证
                     .childOption(ChannelOption.SO_KEEPALIVE, true)
+                    //设置关闭Nagle算法, 以网络通信效率为代价降低网络延迟
+                    .childOption(ChannelOption.TCP_NODELAY, true)
                     //使用匿名内部类的形式初始化通道对象
                     .childHandler(new ChannelInitializer<SocketChannel>() {
                         @Override
